@@ -13,6 +13,7 @@ public class Load {
 	public static final String STRONG_BULLET_IMAGE = "strongBullet.png";
 	public static final String METEOR_IMAGE = "meteor.png";
 	public static final String ICE_METEOR_IMAGE = "iceMeteor.png";
+	public static final String TRACKING_METEOR_IMAGE = "trackingMeteor.png";
 	public static final String HEAL_IMAGE = "heal.png";
 	public static final String PIERCE_IMAGE = "pierce.png";
 	public static final String HEALTH_BAR_IMAGE = "healthBar.png";

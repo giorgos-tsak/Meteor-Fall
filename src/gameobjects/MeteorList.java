@@ -2,6 +2,7 @@ package gameobjects;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import factories.MeteorFactory;
 import main.Game;
@@ -37,11 +38,7 @@ public class MeteorList {
 	}
 	
 	public void removeMeteor() {
-		for (int i = 0; i < meteors.size(); i++) {
-			if(meteors.get(i).getY()>Game.GAME_HEIGHT || meteors.get(i).isDestroyed()) {
-				meteors.remove(i);
-			}
-		}
+		meteors.removeIf(meteor -> meteor.getY() > Game.GAME_HEIGHT || meteor.isDestroyed());
 	}
 	
 	

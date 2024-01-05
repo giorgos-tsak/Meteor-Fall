@@ -8,6 +8,7 @@ import gameobjects.MeteorList;
 import gameobjects.Player;
 import gameobjects.PowerupList;
 import main.Game;
+import ui.HealthBar;
 
 public class PlayingState extends State implements GameState{
 
@@ -19,7 +20,7 @@ public class PlayingState extends State implements GameState{
 	
 	public PlayingState(Game game) {
 		super(game);
-		player = new Player(100, 100);
+		player = new Player(100, 100,game.getStats());
 		meteorList = new MeteorList(player);
 		powerupList = new PowerupList(player);
 		pauseState = new PauseState(game);
@@ -27,23 +28,30 @@ public class PlayingState extends State implements GameState{
 
 	@Override
 	public void update() {
-		if(pause) {
-			pauseState.update();
+		if(player.isAlive()){
+			if(pause) {
+				pauseState.update();
+			}
+			else {
+				player.update();
+				meteorList.update();
+				powerupList.update();
+			}
 		}
-		else {			
-			player.update();
-			meteorList.update();
-			powerupList.update();
+		else{
+			game.setCurrentState(new DeadState(game));
 		}
 	}
 	
 	@Override
 	public void render(Graphics g) {
-		player.render(g);
-		meteorList.render(g);
-		powerupList.render(g);
-		if(pause) {
-			pauseState.render(g);
+		if(player.isAlive()){
+			player.render(g);
+			meteorList.render(g);
+			powerupList.render(g);
+			if(pause) {
+				pauseState.render(g);
+			}
 		}
 	}
 
@@ -62,14 +70,13 @@ public class PlayingState extends State implements GameState{
 		else if(e.getKeyCode() == KeyEvent.VK_D) {
 			player.setRight(true);
 		}
+
+		if(e.getKeyCode() == KeyEvent.VK_SPACE){
+			player.setShooting(true);
+		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			if(pause) {
-				pause = false;
-			}
-			else {				
-				pause = true;
-			}
+			pause = !pause;
 		}
 		
 		if(pause) {			
@@ -91,6 +98,10 @@ public class PlayingState extends State implements GameState{
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_D) {
 			player.setRight(false);
+		}
+
+		if(e.getKeyCode() == KeyEvent.VK_SPACE){
+			player.setShooting(false);
 		}
 		
 	}

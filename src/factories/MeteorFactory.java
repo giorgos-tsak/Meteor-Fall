@@ -3,31 +3,35 @@ package factories;
 import java.util.Random;
 
 import gameobjects.IceMeteor;
+import gameobjects.Meteor;
 import gameobjects.TrackingMeteor;
 
 public class MeteorFactory extends Factory{
 	
 	
-	protected int creationCooldown;
+	private  float creationCoolDown;
 	
 	public MeteorFactory() {
-		creationCooldown = 1;
+		creationCoolDown = 1f;
 	}
 	
 	@Override
-	public Creatable create() {
+	public Meteor create() {
 		currentTime = System.currentTimeMillis();
 		elapsedTime = (currentTime-creationTime)/1000.0;
-		if(elapsedTime>=creationCooldown)
+		if(elapsedTime>=creationCoolDown)
 		{			
 			creationTime = System.currentTimeMillis();
 			Random random = new Random();
 			int randomNum = random.nextInt(100);
-			if(randomNum<=70) {
+			if(randomNum<=30) {
 				return new IceMeteor(60, 60);
 			}
-			else {
+			else if (randomNum <=60){
 				return new TrackingMeteor(60, 60);
+			}
+			else{
+				return new Meteor(60,60);
 			}
 		}
 		return null;

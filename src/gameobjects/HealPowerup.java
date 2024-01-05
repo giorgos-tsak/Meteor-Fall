@@ -16,8 +16,8 @@ public class HealPowerup extends Powerup{
 	public void power(Player player) {
 		if(this.getHitbox().intersects(player.getHitbox())) {
 			player.setHealth(player.getHealth()+healing);
-			if(player.getHealth()>100) {
-				player.setHealth(100);
+			if(player.getHealth()>player.getMaxHealth()) {
+				player.setHealth(player.getMaxHealth());
 			}
 			activated = true;
 		}

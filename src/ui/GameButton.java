@@ -6,14 +6,13 @@ import java.awt.image.BufferedImage;
 
 import utilz.Load;
 
-public class GameButton {
-	
-	private int width,height;
-	private int x,y;
+public class GameButton extends GameUiComponent{
+
+	protected Rectangle bounds;
+	protected int width,height;
 	private int rowIndex,columnIndex;
 	private BufferedImage[] animations;
-	private boolean mouseOver,mousePressed;
-	private Rectangle bounds;
+
 	
 	public GameButton(int x,int y,int width,int height,int columnIndex) {
 		this.x = x;

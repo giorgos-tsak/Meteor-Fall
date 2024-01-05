@@ -1,7 +1,6 @@
 package ui;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import gameobjects.Player;
@@ -23,6 +22,7 @@ public class HealthBar {
 		healthBarX = 0;
 		healthBarY = 0;
 		maxWidth=healthBarWidth-(int)(healthBarWidth/3.6);
+
 	}
 	
 	
@@ -32,6 +32,18 @@ public class HealthBar {
 		graphics.setColor(Color.red);
 		graphics.fillRect(healthBarWidth/4+healthBarX, (int)(healthBarHeight/3.3)+healthBarY, healthWidth, (int)(healthBarHeight/2.5));
 		graphics.drawImage(image,healthBarX,healthBarY,healthBarWidth,healthBarHeight,null);
+
+		graphics.setColor(Color.white);
+		graphics.setFont(new Font("Arial", Font.BOLD, 16));
+
+		String healthText = player.getHealth()+"/ "+player.getMaxHealth();
+		FontMetrics fontMetrics = graphics.getFontMetrics();
+		int textWidth = fontMetrics.stringWidth(healthText);
+		int textX = (healthBarWidth - textWidth) / 2;
+		int textY = healthBarHeight / 2 + fontMetrics.getAscent();
+
+		graphics.drawString(healthText, healthBarX + textX, healthBarY + textY);
+
 	}
 	
 	public void update() {
@@ -39,7 +51,7 @@ public class HealthBar {
 	}
 	
 	public void updateHealthWidth() {
-		healthWidth = maxWidth*player.getHealth()/100; 
+		healthWidth = maxWidth*player.getHealth()/player.getMaxHealth();
 	}
 
 }

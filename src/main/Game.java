@@ -2,8 +2,7 @@ package main;
 
 import java.awt.Graphics;
 
-import states.GameState;
-import states.PlayingState;
+import states.*;
 
 public class Game implements Runnable {
 
@@ -18,10 +17,11 @@ public class Game implements Runnable {
 	public static final int GAME_HEIGHT = 800;
 
 	private GameState currentState;
-	
+	private Stats stats;
 
 	public Game() {
-		currentState = new PlayingState(this);
+		stats = new Stats();
+		currentState = new HomeState(this);
 		gamePanel = new GamePanel(this);
 		frame = new Frame(gamePanel);
 		startGameLoop();
@@ -79,5 +79,12 @@ public class Game implements Runnable {
 	public void setCurrentState(GameState currentState) {
 		this.currentState = currentState;
 	}
-	
+
+	public Stats getStats() {
+		return stats;
+	}
+
+	public void setStats(Stats stats) {
+		this.stats = stats;
+	}
 }

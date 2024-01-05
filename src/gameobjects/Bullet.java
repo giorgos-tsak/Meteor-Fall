@@ -13,7 +13,7 @@ public class Bullet extends GameObject implements Creatable{
 		super(width, height);
 		x=player.x+player.width/2-this.width/2;
 		y=player.y-height;
-		damage = 40;
+		damage = 40+(player.getStats().getDamage()*4);
 		speed = 5f;
 		meteorsHit = new ArrayList<>();
 		

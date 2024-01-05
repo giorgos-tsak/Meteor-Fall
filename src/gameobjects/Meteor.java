@@ -4,23 +4,24 @@ import java.util.Random;
 
 import factories.Creatable;
 import main.Game;
+import utilz.Load;
 
 public class Meteor extends GameObject implements Creatable{
 	
 	
 	private int health;
 	private boolean destroyed;
-	private double hitCooldown;
 	protected int damage = 20;
 	public Meteor(int width, int height) {
 		super(width, height);
 		Random random = new Random();
-		width = 80;
-		heigth = 70;
+		image = Load.loadImage(Load.METEOR_IMAGE);
+		this.width = width;
+		this.heigth = height;
 		x = random.nextInt(Game.GAME_WIDTH-width);
 		y = 0;
 		health=100;
-		hitCooldown=1;
+		speed = 1f;
 	}
 	
 	public void update(Player player) {
@@ -38,11 +39,8 @@ public class Meteor extends GameObject implements Creatable{
 		currentTime = System.currentTimeMillis();
 		elapsedTime = (currentTime-hitTime)/1000.0;
 		if(this.getHitbox().intersects(player.getHitbox())) {
-			if(elapsedTime>=hitCooldown) {
-				hitTime = System.currentTimeMillis();
-				player.setHealth(player.getHealth()-damage);
-				System.out.println("hit");
-			}
+			player.setHealth(player.getHealth()-damage);
+			destroyed = true;
 		}
 	}
 	
@@ -59,6 +57,8 @@ public class Meteor extends GameObject implements Creatable{
 				}
 				if(this.health<=0) {
 					destroyed = true;
+					player.setCurrentExperience(player.getCurrentExperience()+20);
+					System.out.println(player.getCurrentExperience());
 				}
 			}
 		}
@@ -70,7 +70,6 @@ public class Meteor extends GameObject implements Creatable{
 	public void updatePosition() {
 		y+=speed;
 	}
-	
 
 	public int getHealth() {
 		return health;
